@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="test.css">
+</head>
+<body>
+    <!-- a table with 4 columns, and no header -->
+    <div class="results">
+    </div>
+    <script>
+        // add rows with fake data every two seconds
+        setInterval(function() {
+            var results = document.querySelector('.results');
+            var row = document.createElement('div');
+            row.className = 'row';
+            row.innerHTML = `<div class="progress-bg"></div><div class="cell provider"><span>JDCloud</span>
+            </div>`;
+            results.appendChild(row);
+            setTimeout(function() {
+                randomIP= Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255) + "." + Math.floor(Math.random() * 255);
+                var el = document.createElement('div');
+                el.className = 'cell ip';
+                el.innerHTML = `<span>${randomIP}</span>`;
+                row.appendChild(el);
+                // get row width
+                var rowWidth = row.offsetWidth;
+                row.querySelector('.progress-bg').style.width = rowWidth-20 + 'px';
+            }, 100);
+            setTimeout(function() {
+                var el = document.createElement('div');
+                el.className = 'cell asn';
+                el.innerHTML = '<span>AS137936</span>';
+                row.appendChild(el);
+                var rowWidth = row.offsetWidth;
+                row.querySelector('.progress-bg').style.width = rowWidth + 'px';
+            }, 1000);
+            setTimeout(function() {
+                var el = document.createElement('div');
+                el.className = 'cell location';
+                el.innerHTML = '<span>China China Unicom Shanghai Pudong District</span>';
+                row.appendChild(el);
+                var rowWidth = row.offsetWidth;
+                row.querySelector('.progress-bg').style.width = rowWidth+20 + 'px';
+            }, 2000);
+        }, 500);
+    </script>
+</body>
+</html>
