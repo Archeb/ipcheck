@@ -593,6 +593,10 @@ body {
   .right-active .right {
     height: 400%;
   }
+  .right-active .right .scroll-container {
+    overflow-y: scroll;
+    height: 50vh;
+  }
   .right-active .right #ipLookupResult {
     max-width: 90%;
   }
