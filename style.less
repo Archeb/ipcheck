@@ -1,3 +1,6 @@
+html {
+	overflow: hidden;
+}
 a {
 	color: inherit;
 }
@@ -79,20 +82,20 @@ body {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			
+
 			--gradientStart: rgb(116, 169, 254);
 			--gradientEnd: rgb(133, 215, 252);
-			.IPLookupForm{
+			.IPLookupForm {
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 
-				.ipInputBox{
+				.ipInputBox {
 					position: relative;
-					opacity:0;
-					height:0;
-					background: linear-gradient(45deg, rgba(116, 169, 254,0.5), rgba(133, 215, 252,0.5));
-					width:300px;
+					opacity: 0;
+					height: 0;
+					background: linear-gradient(45deg, rgba(116, 169, 254, 0.5), rgba(133, 215, 252, 0.5));
+					width: 300px;
 					border-radius: 15px;
 					visibility: hidden;
 					backdrop-filter: blur(15px) saturate(500%);
@@ -111,9 +114,9 @@ body {
 						border: none;
 						box-sizing: border-box;
 						outline: none;
-						z-index:100;
+						z-index: 100;
 					}
-					#lookupBtn{
+					#lookupBtn {
 						position: absolute;
 						width: 30px;
 						height: 30px;
@@ -125,21 +128,21 @@ body {
 					}
 				}
 			}
-			.IPLookupForm-active{
+			.IPLookupForm-active {
 				.loader {
 					opacity: 0;
-					height:0;
+					height: 0;
 				}
-				.ipInputBox{
-					height:50px;
-					opacity:1;
+				.ipInputBox {
+					height: 50px;
+					opacity: 1;
 					visibility: visible;
 					pointer-events: all;
 				}
 			}
-			.IPLookupForm-inputHide{
-				.ipInputBox{
-					opacity:0;
+			.IPLookupForm-inputHide {
+				.ipInputBox {
+					opacity: 0;
 					pointer-events: none;
 				}
 			}
@@ -344,7 +347,7 @@ body {
 	.slash {
 		min-width: 7px;
 		background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-		animation: slashexpand 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+		animation: slashexpand-vertical 2s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
 		height: 100vh;
 		box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
 		transition: box-shadow 0.5s, transform 0.5s;
@@ -357,12 +360,21 @@ body {
 	.slash-right-shadow {
 		box-shadow: -10px 0 25px rgba(255, 255, 255, 0.5);
 	}
-	@keyframes slashexpand {
+	@keyframes slashexpand-vertical {
 		0% {
 			height: 0vh;
 		}
 		100% {
 			height: 100vh;
+		}
+	}
+
+	@keyframes slashexpand-horizontal {
+		0% {
+			width: 0vw;
+		}
+		100% {
+			width: 100vw;
 		}
 	}
 	.slash-left {
@@ -391,7 +403,7 @@ body {
 			left: 50px;
 			opacity: 1;
 			border-radius: 50%;
-			background-color: rgba(0,0,0,0.5);
+			background-color: rgba(0, 0, 0, 0.5);
 			transition: all 0.1s;
 		}
 		.loader-color {
@@ -602,8 +614,82 @@ body {
 @media (max-width: 768px) {
 	.container {
 		flex-direction: column;
+		.right,
+		.left,
+		.side-bg {
+			clip-path: none !important;
+		}
+		.right {
+			.scroll-container .content .results {
+				grid-template-columns: auto !important;
+			}
+		}
+	}
+	.right-active {
+		.loader {
+			transform: scale(0.7);
+		}
+		.right {
+			height: 400%;
+			#ipLookupResult {
+				max-width: 90%;
+				.row .cell {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					span {
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+				}
+			}
+		}
+	}
+	.left-active {
+		.loader {
+			transform: scale(0.7);
+		}
+		.left {
+			height: 400%;
+			overflow:hidden;
+			flex-direction: column;
+			align-items: center;
+			width: 100% !important;
+			.content {
+				width:auto;
+				margin-left:0;
+				height:fit-content;
+				padding: 20px 0;
+				overflow-y: scroll;
+				.results{
+					margin-left:0;
+					display: grid;
+					gap: 15px;
+					.row-wrapper {
+						width: 100%;
+						margin:0;
+		
+						.row {
+							grid-template-columns: auto auto !important;
+							width: 100% !important;
+							margin-left:0;
+							box-sizing: border-box;
+							padding: 5px 10px 10px;
+							justify-content: space-between;
+		
+							.cell.ip {
+								border-left: none !important;
+								justify-content: right;
+							}
+						}
+					}
+				}
+			}
+
+			
+		}
 	}
 	.slash {
-		height: 8px;
+		height: 8px !important;
+		animation-name: slashexpand-horizontal !important;
 	}
 }

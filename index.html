@@ -2,13 +2,13 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, user-scalable=yes,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="viewport" content="width=device-width, user-scalable=yes,initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9" />
 		<link rel="stylesheet" href="style.css" />
 		<title>GFW.Moe</title>
 	</head>
 	<body>
 		<!-- Front-end Authored by https://mozz.ie/ All Rights Reserved. Unauthorized copying, modification and distribution is not permitted. -->
-		<!-- 前端原作者 https://mozz.ie/ 保留所有权利。禁止未授权的复制、修改及分发 -->
+		<!-- 前端原作者 https://mozz.ie/ 保留所有权利。禁止未授权的复制、修改、分发和复用 -->
 
 		<div class="container">
 			<div class="left">
@@ -68,12 +68,11 @@
 						</div>
 					</div>
 					<div class="content">
-						
 						<div class="loader loader-animated lookupFormLoader">
 							<div class="loader-color"></div>
 							<div class="loader-glow"><div class="loader-glow-color"></div></div>
 						</div>
-						
+
 						<div class="results" id="ipLookupResult"></div>
 					</div>
 				</div>
@@ -147,7 +146,7 @@
 				document.querySelector(".slash").classList.remove("slash-right");
 				// 清除右边的查询结果
 				document.getElementById("ipLookupResult").innerHTML = "";
-				document.getElementById("ipLookupResult").style.gridTemplateRows="";
+				document.getElementById("ipLookupResult").style.gridTemplateRows = "";
 				document.querySelector(".IPLookupForm").classList.remove("IPLookupForm-active");
 				document.querySelector(".lookupFormLoader").classList.remove("lookupFormLoader-active");
 				document.querySelector("#ipLookupResult").classList.remove("ipLookupResult-active");
@@ -165,6 +164,8 @@
 
 				document.querySelector("#currentIPcheck").classList.remove("loader-animated");
 				document.querySelector("#currentIPcheck").classList.remove("loader-bgTransition");
+				// 清除左边的查询结果
+				document.querySelector("#currentIPresults").innerHTML = "";
 			});
 
 			document.querySelector("#lookupBtn").addEventListener("click", () => {
@@ -228,25 +229,30 @@
 						row.dataset.provider = name;
 						row.innerHTML = `<div class="row"><div class="cell provider"><span>${name}</span></div></div>`;
 						results.appendChild(row);
-						var rowWidth = 0;
-						row.querySelectorAll(".cell").forEach((el) => {
-							rowWidth += el.offsetWidth;
-						});
-						row.style.width = rowWidth + 10 + "px";
+						if (!isMobile) {
+							var rowWidth = 0;
+							row.querySelectorAll(".cell").forEach((el) => {
+								rowWidth += el.offsetWidth;
+							});
+							row.style.width = rowWidth + 10 + "px";
+						}
 					}
 				} else {
 					// if ip exist, update row
 					var row = results.querySelector(`[data-provider="${name}"] .row`);
 					if (row) {
 						// update ip
-						
+
 						updateElement(row, "ip", ip);
-						// get row width by adding up all cell width
-						var rowWidth = 0;
-						row.querySelectorAll(".cell").forEach((el) => {
-							rowWidth += el.offsetWidth;
-						});
-						row.parentElement.style.width = rowWidth + 20 + "px";
+
+						if (!isMobile) {
+							// get row width by adding up all cell width
+							var rowWidth = 0;
+							row.querySelectorAll(".cell").forEach((el) => {
+								rowWidth += el.offsetWidth;
+							});
+							row.parentElement.style.width = rowWidth + 20 + "px";
+						}
 					}
 				}
 				// if 4 secs passed and still no ip, add nodata
@@ -263,20 +269,25 @@
 			function insertAdditional(name, additional) {
 				var results = document.getElementById("currentIPresults");
 				var row = results.querySelector(`[data-provider="${name}"] .row`);
-				updateElement(row, "asn", "AS"+additional.asn);
-				var rowWidth = 0;
-				row.querySelectorAll(".cell").forEach((el) => {
-					rowWidth += el.offsetWidth+10;
-				});
-				row.parentElement.style.width = rowWidth + "px";
-				setTimeout(() => {
-					// 一些动画效果
-					updateElement(row, "location", additional.position);
+				updateElement(row, "asn", "AS" + additional.asn);
+
+				if (!isMobile) {
 					var rowWidth = 0;
 					row.querySelectorAll(".cell").forEach((el) => {
 						rowWidth += el.offsetWidth + 10;
 					});
 					row.parentElement.style.width = rowWidth + "px";
+				}
+				setTimeout(() => {
+					// 一些动画效果
+					updateElement(row, "location", additional.position);
+					if (!isMobile) {
+						var rowWidth = 0;
+						row.querySelectorAll(".cell").forEach((el) => {
+							rowWidth += el.offsetWidth + 10;
+						});
+						row.parentElement.style.width = rowWidth + "px";
+					}
 				}, 700);
 			}
 			function updateElement(row, col, text) {
@@ -296,9 +307,9 @@
 
 			var cache = {};
 
-			function fireIPLookup(){
+			function fireIPLookup() {
 				var ip = document.querySelector("#lookupInput").value;
-				if(!ValidIPv4v6(ip)) {
+				if (!ValidIPv4v6(ip)) {
 					// add shakeHead animation to input box
 					document.querySelector(".ipInputBox").style.animation = "shakeHead 0.5s";
 					setTimeout(() => {
@@ -308,16 +319,18 @@
 				}
 				fireIPLookupAnimation();
 				document.getElementById("ipLookupResult").innerHTML = "";
-				const ipdb = [['qqwry', '纯真'],
-								['qqzeng', 'qqzeng'],
-								['ipip', 'IPIP'],
-								['awdb', 'IP问问'],
-								['baidu', '百度'],
-								['bce', '埃文'],
-								['ipinsight', 'IPinsight'],
-								//['ipinfo', 'ipinfo'],
-								['toutiao', '头条'],
-								['wuzhui', '360']]
+				const ipdb = [
+					["qqwry", "纯真"],
+					["qqzeng", "qqzeng"],
+					["ipip", "IPIP"],
+					["awdb", "IP问问"],
+					["baidu", "百度"],
+					["bce", "埃文"],
+					["ipinsight", "IPinsight"],
+					//['ipinfo', 'ipinfo'],
+					["toutiao", "头条"],
+					["wuzhui", "360"],
+				];
 				// use fetchLocFromAtto(ip,db) with each ipdb to get ip location
 				ipdb.forEach((db) => {
 					fetchLocFromAtto(ip, db[0]).then((json) => {
@@ -325,10 +338,10 @@
 					});
 				});
 			}
-			function insertIPLookupResult(name,data) {
-				if(data.position.trim() == "") return;
+			function insertIPLookupResult(name, data) {
+				if (data.position.trim() == "") return;
 				var results = document.getElementById("ipLookupResult");
-				console.log(name,data);
+				console.log(name, data);
 				var row = document.createElement("div");
 				row.className = "row-wrapper";
 				row.dataset.provider = name;
@@ -337,31 +350,35 @@
 				// delay random time to insert result
 				setTimeout(() => {
 					// if right panel is not active, do not insert result
-					if(!document.querySelector(".container").classList.contains("right-active")) return;
+					if (!document.querySelector(".container").classList.contains("right-active")) return;
 					results.appendChild(row);
-					// count the amount of rows
-					const totalRows = 5;
-					var rowCount = results.querySelectorAll(".row-wrapper").length;
-					// round the row count to upper
-					var rowCountRounded = Math.ceil(rowCount / 2);
-					// set the results' grid-template-rows with manually repeat
-					results.style.gridTemplateRows = "1fr ".repeat(rowCountRounded) + ((totalRows > rowCountRounded) ? "0fr ".repeat(totalRows - rowCountRounded) : "");
+					if (isMobile) {
+						// 移动版动画，只有一栏
+						const totalRows = 9;
+						var rowCount = results.querySelectorAll(".row-wrapper").length;
+						results.style.gridTemplateRows = "1fr ".repeat(rowCount) + (totalRows > rowCount ? "0fr ".repeat(totalRows - rowCount) : "");
+					} else {
+						// pc版动画，双栏 9个数据源/2四舍五入是5个
+						const totalRows = 5;
+						var rowCount = results.querySelectorAll(".row-wrapper").length;
+						var rowCountRounded = Math.ceil(rowCount / 2);
+						results.style.gridTemplateRows =
+							"1fr ".repeat(rowCountRounded) + (totalRows > rowCountRounded ? "0fr ".repeat(totalRows - rowCountRounded) : "");
+					}
 				}, Math.random() * 1000);
-				
-
 			}
 
-			function fetchLocFromAtto(ip, db="qqzeng") {
+			function fetchLocFromAtto(ip, db = "qqzeng") {
 				return fetch("https://ipapi.atto.town/iphtml/" + db + "/" + ip)
 					.then(resjson)
 					.catch(function (err) {
 						console.error("Unable to get ip data from atto town: ", err);
-						random=["中国 北京市 海淀区","中国 广州市","中国 内蒙古自治区 呼伦贝尔 中国电信/CN2网络"]
+						random = ["中国 北京市 海淀区", "中国 广州市", "中国 内蒙古自治区 呼伦贝尔 中国电信/CN2网络"];
 						return {
-							"asn": 0,
-							"position": location.origin.indexOf("http://127.0.0.1")!=-1 ? random[Math.floor(Math.random()*random.length)] : "未知",
-							"asOrg": "",
-							"fallback": ""
+							asn: 0,
+							position: location.origin.indexOf("http://127.0.0.1") != -1 ? random[Math.floor(Math.random() * random.length)] : "未知",
+							asOrg: "",
+							fallback: "",
 						};
 					});
 			}
@@ -415,9 +432,10 @@
 				}
 				return ip;
 			}
-			function ValidIPv4v6(ip){
-				const ipv4Regex = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm; 
-				const ipv6Regex = /^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$/gm;
+			function ValidIPv4v6(ip) {
+				const ipv4Regex = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm;
+				const ipv6Regex =
+					/^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$/gm;
 				if (ipv4Regex.test(ip)) {
 					return true;
 				}
@@ -573,9 +591,8 @@
 				return false;
 			}
 
-			// if using phone, alert
-			if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-				alert("手机版体验尚未优化，请在电脑上打开此网页");
+			function isMobile() {
+				return window.innerWidth <= 768;
 			}
 		</script>
 	</body>
