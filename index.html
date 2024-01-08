@@ -354,12 +354,12 @@
 					results.appendChild(row);
 					if (isMobile) {
 						// 移动版动画，只有一栏
-						const totalRows = 9;
+						var totalRows = 9;
 						var rowCount = results.querySelectorAll(".row-wrapper").length;
 						results.style.gridTemplateRows = "1fr ".repeat(rowCount) + (totalRows > rowCount ? "0fr ".repeat(totalRows - rowCount) : "");
 					} else {
 						// pc版动画，双栏 9个数据源/2四舍五入是5个
-						const totalRows = 5;
+						var totalRows = 5;
 						var rowCount = results.querySelectorAll(".row-wrapper").length;
 						var rowCountRounded = Math.ceil(rowCount / 2);
 						results.style.gridTemplateRows =
