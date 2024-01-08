@@ -229,7 +229,7 @@
 						row.dataset.provider = name;
 						row.innerHTML = `<div class="row"><div class="cell provider"><span>${name}</span></div></div>`;
 						results.appendChild(row);
-						if (!isMobile) {
+						if (!isMobile()) {
 							var rowWidth = 0;
 							row.querySelectorAll(".cell").forEach((el) => {
 								rowWidth += el.offsetWidth;
@@ -245,7 +245,7 @@
 
 						updateElement(row, "ip", ip);
 
-						if (!isMobile) {
+						if (!isMobile()) {
 							// get row width by adding up all cell width
 							var rowWidth = 0;
 							row.querySelectorAll(".cell").forEach((el) => {
@@ -271,7 +271,7 @@
 				var row = results.querySelector(`[data-provider="${name}"] .row`);
 				updateElement(row, "asn", "AS" + additional.asn);
 
-				if (!isMobile) {
+				if (!isMobile()) {
 					var rowWidth = 0;
 					row.querySelectorAll(".cell").forEach((el) => {
 						rowWidth += el.offsetWidth + 10;
@@ -281,7 +281,7 @@
 				setTimeout(() => {
 					// 一些动画效果
 					updateElement(row, "location", additional.position);
-					if (!isMobile) {
+					if (!isMobile()) {
 						var rowWidth = 0;
 						row.querySelectorAll(".cell").forEach((el) => {
 							rowWidth += el.offsetWidth + 10;
@@ -352,7 +352,7 @@
 					// if right panel is not active, do not insert result
 					if (!document.querySelector(".container").classList.contains("right-active")) return;
 					results.appendChild(row);
-					if (isMobile) {
+					if (isMobile()) {
 						// 移动版动画，只有一栏
 						var totalRows = 9;
 						var rowCount = results.querySelectorAll(".row-wrapper").length;
@@ -361,9 +361,10 @@
 						// pc版动画，双栏 9个数据源/2四舍五入是5个
 						var totalRows = 5;
 						var rowCount = results.querySelectorAll(".row-wrapper").length;
+						// round the row count to upper
 						var rowCountRounded = Math.ceil(rowCount / 2);
-						results.style.gridTemplateRows =
-							"1fr ".repeat(rowCountRounded) + (totalRows > rowCountRounded ? "0fr ".repeat(totalRows - rowCountRounded) : "");
+						// set the results' grid-template-rows with manually repeat
+						results.style.gridTemplateRows = "1fr ".repeat(rowCountRounded) + ((totalRows > rowCountRounded) ? "0fr ".repeat(totalRows - rowCountRounded) : "");
 					}
 				}, Math.random() * 1000);
 			}
