@@ -97,6 +97,55 @@
 			</defs>
 		</svg>
 
+		<style>
+			.modal {
+			  position: fixed;
+			  top: 30%;
+			  left: calc(50% - 150px);
+			  right: 0;
+			  bottom: 0;
+			  background-color: rgba(0, 0, 0, 0.5);
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  z-index: 1000;
+			}
+			.modal-content {
+			  background-color: white;
+			  padding: 20px;
+			  border-radius: 5px;
+			  width: 300px;
+			  text-align: center;
+			}
+			.close-btn {
+			  padding: 10px 20px;
+			  margin-top: 20px;
+			  cursor: pointer;
+			}
+		  </style>
+		  </head>
+		  <body>
+		  <div id="myModal" class="modal" style="display: none;">
+			<div class="modal-content">
+			  <h2>声明</h2>
+			  <p>本站与Telegram上盗用本人历史昵称与头像的频道无任何关系。本人目前没有，亦从未运营或供职于任何国际网络加速类、IDC服务托管类服务，特此声明</p>
+			  <button class="close-btn" onclick="closeModal()">已读</button>
+			</div>
+		  </div>
+		  
+		  <script>
+			window.onload = function() {
+			  if (!localStorage.getItem('hasRead')) {
+				document.getElementById('myModal').style.display = 'block';
+			  }
+			};
+		  
+			function closeModal() {
+			  localStorage.setItem('hasRead', 'true');
+			  document.getElementById('myModal').style.display = 'none';
+			}
+		  </script>
+
 		<script>
 			const slash = document.querySelector(".slash");
 			document.querySelector(".left").addEventListener("mouseenter", () => {
