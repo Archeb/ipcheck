@@ -1,4 +1,4 @@
-# IP Check (GFW.Moe)
+# IP Check
 
 一个普通的 IP 查询和前端界面
 
