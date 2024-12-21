@@ -3,30 +3,598 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, user-scalable=yes,initial-scale=0.9, maximum-scale=0.9, minimum-scale=0.9" />
-		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+		<title>GFW.Moe</title>
 	</head>
 	<body>
+		<!-- Front-end Authored by https://mozz.ie/ All Rights Reserved. Unauthorized copying, modification and distribution is not permitted. -->
+		<!-- 前端原作者 https://mozz.ie/ 保留所有权利。禁止未授权的复制、修改、分发和复用 -->
 
 		<div class="container">
-			
-			<div class="modal-content">
-				<h2>声明</h2>
-				<p>本站与Telegram上盗用本人历史昵称与头像的频道无任何关系。<br>本人目前没有，亦从未运营或供职于任何国际网络加速类、IDC服务托管类服务，特此声明</p>
-			  </div>
-			
-		</div>
-		
+			<div class="left">
+				<div class="side-bg"></div>
+				<div class="loader" id="currentIPcheck">
+					<div class="loader-color"></div>
+					<div class="loader-icon" style="color: #c4ee45">
+						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24">
+							<path
+								d="M20 1v3h3v2h-3v3h-2V6h-3V4h3V1h2zm-8 12c-1.1 0-2-.9-2-2s.9-2 2-2s2 .9 2 2s-.9 2-2 2zm1-9.94v2.02A6.53 6.53 0 0 0 12 5c-3.35 0-6 2.57-6 6.2c0 2.34 1.95 5.44 6 9.14c4.05-3.7 6-6.79 6-9.14V11h2v.2c0 3.32-2.67 7.25-8 11.8c-5.33-4.55-8-8.48-8-11.8C4 6.22 7.8 3 12 3c.34 0 .67.02 1 .06z"
+								fill="currentColor"
+							></path>
+						</svg>
+					</div>
 
-		<style>
-			.modal-content {
-			  margin:40px auto;
-			  background-color: white;
-			  padding: 20px;
-			  border-radius: 5px;
-			  width: 500px;
-			  text-align: center;
+					<div class="loader-glow">
+						<div class="loader-glow-color"></div>
+					</div>
+				</div>
+				<div class="content">
+					<div class="results" id="currentIPresults"></div>
+				</div>
+			</div>
+			<div class="slash"></div>
+			<div class="right">
+				<div class="side-bg"></div>
+				<div class="scroll-container">
+					<div class="IPLookupForm">
+						<div class="loader" id="openIPLookupForm">
+							<div class="loader-color"></div>
+							<div class="loader-glow">
+								<div class="loader-glow-color"></div>
+							</div>
+
+							<div class="loader-icon" style="color: #b1d6fc">
+								<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+									<path
+										d="M3.44126 9.95574C1.51763 11.8794 1.51763 14.9982 3.44126 16.9218C5.13601 18.6166 7.75847 18.8182 9.67398 17.5267L13.9304 21.7831C14.2324 22.0851 14.7219 22.0851 15.0239 21.7831C15.2984 21.5086 15.3234 21.0791 15.0988 20.7764L15.0239 20.6896L10.8066 16.4713C12.3202 14.5385 12.1871 11.7355 10.4073 9.95574C8.4837 8.03211 5.36488 8.03211 3.44126 9.95574ZM16.6543 16.5003C16.4288 17.7878 16.1063 18.9565 15.7017 19.9542L15.7311 19.9826L15.8557 20.1229C16.0759 20.4178 16.2003 20.7465 16.2337 21.0747C18.2775 20.1267 19.947 18.5075 20.96 16.5005L16.6543 16.5003ZM12.2503 16.4995L14.5342 18.7864C14.7364 18.1865 14.9153 17.5182 15.0635 16.7948L15.1215 16.5003L12.2503 16.4995ZM9.31383 11.0492C10.6335 12.3689 10.6335 14.5086 9.31383 15.8283C7.99412 17.148 5.85446 17.148 4.53476 15.8283C3.21506 14.5086 3.21506 12.3689 4.53476 11.0492C5.85446 9.72954 7.99412 9.72954 9.31383 11.0492ZM15.4503 9.99975L11.7503 9.99893C12.7971 11.4651 13.1021 13.3107 12.6422 15.0002L15.3518 15.0005C15.4649 14.0547 15.5273 13.0471 15.5273 12C15.5273 11.4857 15.5123 10.9809 15.4835 10.4882L15.4503 9.99975ZM16.9572 10.0003C17.0035 10.6503 17.0273 11.3185 17.0273 12C17.0273 12.8294 16.992 13.6391 16.924 14.4202L16.8669 15.0004H21.5695C21.867 14.0532 22.0273 13.0453 22.0273 12C22.0273 11.315 21.9585 10.646 21.8273 9.99972L16.9572 10.0003ZM14.8622 2.40639C15.743 3.7559 16.3976 5.73551 16.7452 8.06013L16.8068 8.49997L21.3977 8.49967C20.3564 5.71293 18.1078 3.51511 15.2882 2.54264L14.984 2.44317L14.8622 2.40639ZM12.0258 2.00146C10.749 2.00146 9.46472 4.38383 8.86841 7.84022C9.33258 8.00045 9.77986 8.22014 10.1994 8.49897L15.2866 8.49971C14.7472 4.69053 13.3822 2.00146 12.0258 2.00146ZM9.18939 2.40635C6.17108 3.29733 3.74706 5.57394 2.65385 8.49967L3.64914 8.49897C4.77322 7.75198 6.09606 7.42945 7.39179 7.53138C7.71444 5.67356 8.23834 4.06212 8.91927 2.85233L9.0815 2.57658L9.18939 2.40635Z"
+										fill="currentColor"
+									/>
+									<script xmlns="" />
+								</svg>
+							</div>
+						</div>
+						<div class="ipInputBox">
+							<input id="lookupInput" autocomplete="off" />
+							<div id="lookupBtn">
+								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 12 12">
+									<g fill="none">
+										<path
+											d="M4.47 2.22a.75.75 0 0 0 0 1.06L7.19 6L4.47 8.72a.75.75 0 0 0 1.06 1.06l3.25-3.25a.75.75 0 0 0 0-1.06L5.53 2.22a.75.75 0 0 0-1.06 0z"
+											fill="currentColor"
+										></path>
+									</g>
+								</svg>
+							</div>
+						</div>
+					</div>
+					<div class="content">
+						<div class="loader loader-animated lookupFormLoader">
+							<div class="loader-color"></div>
+							<div class="loader-glow"><div class="loader-glow-color"></div></div>
+						</div>
+
+						<div class="results" id="ipLookupResult"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="page-header">
+			<span>IP 查询 © <a href="https://mozz.ie">Mozz.ie</a> & <a href="https://best33.com/">oott123</a></span>
+		</div>
+		<div class="page-footer">
+			<span>Pixiv <a href="https://www.pixiv.net/artworks/77186528">#77186528</a></span>
+		</div>
+		<svg height="0" width="0" class="svg-clip" style="position: absolute">
+			<defs>
+				<clipPath id="clip" clipPathUnits="objectBoundingBox">
+					<path d="M0,0 L1,0 1,1 0,1 0,0M.95,.5A.05,.05 0 1 0 .05,.5A.05,.05 0 1 0 .95,.5z" />
+				</clipPath>
+			</defs>
+			<defs>
+				<clipPath id="clip2" clipPathUnits="objectBoundingBox">
+					<path d="M 0 0 L 1 0 L 1 1 L 0 1 L 0 0 M 0.77 0.5 A 0.05 0.05 0 1 0 0.23 0.5 A 0.05 0.05 0 1 0 0.77 0.5 z" />
+				</clipPath>
+			</defs>
+		</svg>
+
+		<script>
+			const slash = document.querySelector(".slash");
+			document.querySelector(".left").addEventListener("mouseenter", () => {
+				slash.classList.add("slash-right-shadow");
+			});
+			document.querySelector(".left").addEventListener("mouseleave", () => {
+				slash.classList.remove("slash-right-shadow");
+			});
+			document.querySelector(".right").addEventListener("mouseenter", () => {
+				slash.classList.add("slash-left-shadow");
+			});
+			document.querySelector(".right").addEventListener("mouseleave", () => {
+				slash.classList.remove("slash-left-shadow");
+			});
+			// 鼠标跟随背景移动
+			const el1 = document.querySelector(".left");
+
+			el1.addEventListener("mousemove", (e) => {
+				moveX = event.clientX - el1.offsetLeft;
+				//moveY = event.clientY - el1.offsetTop;
+				el1.querySelector(".side-bg").style.backgroundPositionX = -(moveX / 50 + 50) + "px";
+			});
+			const el2 = document.querySelector(".right");
+
+			el2.addEventListener("mousemove", (e) => {
+				moveX = event.clientX - el2.offsetLeft;
+				//moveY = event.clientY - el2.offsetTop;
+				el2.querySelector(".side-bg").style.backgroundPositionX = -(moveX / 50 + 100) + "px";
+			});
+			document.querySelector("#currentIPcheck").addEventListener("click", () => {
+				document.querySelector("#currentIPcheck").classList.add("loader-bgTransition");
+				setTimeout(() => {
+					document.querySelector("#currentIPcheck").classList.add("loader-animated");
+					startIPcheck();
+				}, 500);
+				// 三秒后隐藏loader
+				setTimeout(() => {
+					document.querySelector("#currentIPcheck").classList.remove("loader-bgTransition");
+					setTimeout(() => {
+						document.querySelector("#currentIPcheck").classList.remove("loader-animated");
+					}, 500);
+				}, 4000);
+				document.querySelector(".container").classList.add("left-active");
+				document.querySelector(".container").classList.remove("right-active");
+
+				document.querySelector(".slash").classList.add("slash-left");
+				document.querySelector(".slash").classList.remove("slash-right");
+				// 清除右边的查询结果
+				document.getElementById("ipLookupResult").innerHTML = "";
+				document.getElementById("ipLookupResult").style.gridTemplateRows = "";
+				document.querySelector(".IPLookupForm").classList.remove("IPLookupForm-active");
+				document.querySelector(".lookupFormLoader").classList.remove("lookupFormLoader-active");
+				document.querySelector("#ipLookupResult").classList.remove("ipLookupResult-active");
+				document.querySelector(".right .scroll-container").style.transform = "translateY(0px)";
+			});
+			document.querySelector("#openIPLookupForm").addEventListener("click", () => {
+				document.querySelector(".IPLookupForm").classList.add("IPLookupForm-active");
+				setTimeout(() => {
+					document.querySelector("#lookupInput").focus();
+				}, 500);
+				document.querySelector(".container").classList.add("right-active");
+				document.querySelector(".container").classList.remove("left-active");
+				document.querySelector(".slash").classList.add("slash-right");
+				document.querySelector(".slash").classList.remove("slash-left");
+
+				document.querySelector("#currentIPcheck").classList.remove("loader-animated");
+				document.querySelector("#currentIPcheck").classList.remove("loader-bgTransition");
+				// 清除左边的查询结果
+				document.querySelector("#currentIPresults").innerHTML = "";
+			});
+
+			document.querySelector("#lookupBtn").addEventListener("click", () => {
+				fireIPLookup();
+			});
+			document.querySelector("#lookupInput").addEventListener("keyup", (e) => {
+				if (e.keyCode === 13) {
+					fireIPLookup();
+				}
+			});
+			function fireIPLookupAnimation() {
+				document.querySelector(".lookupFormLoader").classList.add("lookupFormLoader-active");
+				document.querySelector(".IPLookupForm").classList.add("IPLookupForm-inputHide");
+				document.querySelector("#ipLookupResult").classList.add("ipLookupResult-active");
+				document.querySelector(".right .scroll-container").style.transform = "translateY(20px)";
+
+				setTimeout(() => {
+					document.querySelector(".lookupFormLoader").classList.remove("lookupFormLoader-active");
+					document.querySelector(".IPLookupForm").classList.remove("IPLookupForm-inputHide");
+					document.querySelector(".right .scroll-container").style.transform = "";
+				}, 5000);
 			}
-		  </style>
-		  
+
+			function startIPcheck() {
+				// clear results
+				document.getElementById("currentIPresults").innerHTML = "";
+				regexApi("京东云", "https://cf-ns.com/cdn-cgi/trace", /ip=(.*)/);
+
+				//plainApi("net.cn", "https://ashs-qd.orztech.com/angry-internet-north-outlook-strange.php");
+				plainApi("阿里云", "https://www.xivcdn.com/_myip");
+
+				insertResult("又拍云");
+				fetch("https://pubstatic.b0.upaiyun.com/?_upnode&_=" + Date.now())
+					.then(resjson)
+					.then(function (json) {
+						insertResult("又拍云", json.remote_addr);
+					});
+
+				insertResult("GAE");
+				fetch("https://groovy-student-432.appspot.com/?_=" + Date.now())
+					.then(resjson)
+					.then(function (json) {
+						var o = json.origin.split(",");
+						insertResult("GAE", o[o.length - 1]);
+					});
+
+				regexApi("Cloudflare", "https://cloudflare.net/cdn-cgi/trace", /ip=(.*)/);
+				plainApi("HelioHost", "https://oott123.helioho.st/ip.php");
+
+				stunApi("Google STUN", "stun.l.google.com:19302");
+				stunApi("腾讯 STUN", "stun.qq.com");
+			}
+
+			function insertResult(name, ip) {
+				var results = document.getElementById("currentIPresults");
+				if (!ip) {
+					// 没有IP，是第一次插入结果，插入新行
+					if (!results.querySelector(`[data-provider="${name}"]`)) {
+						var row = document.createElement("div");
+						row.className = "row-wrapper";
+						row.dataset.provider = name;
+						row.innerHTML = `<div class="row"><div class="cell provider"><span>${name}</span></div></div>`;
+						results.appendChild(row);
+						if (!isMobile()) {
+							var rowWidth = 0;
+							row.querySelectorAll(".cell").forEach((el) => {
+								rowWidth += el.offsetWidth;
+							});
+							row.style.width = rowWidth + 10 + "px";
+						}
+					}
+				} else {
+					// if ip exist, update row
+					var row = results.querySelector(`[data-provider="${name}"] .row`);
+					if (row) {
+						// update ip
+
+						updateElement(row, "ip", ip);
+
+						if (!isMobile()) {
+							// get row width by adding up all cell width
+							var rowWidth = 0;
+							row.querySelectorAll(".cell").forEach((el) => {
+								rowWidth += el.offsetWidth;
+							});
+							row.parentElement.style.width = rowWidth + 20 + "px";
+						}
+					}
+				}
+				// if 4 secs passed and still no ip, add nodata
+				setTimeout(() => {
+					if (row && !row.querySelector(".cell.ip")) {
+						insertResult(row.dataset.provider, "无结果");
+					}
+				}, 4000);
+				ip = (ip || "").trim();
+				if (ip && ip != "无结果") {
+					getLoc(name, ip);
+				}
+			}
+			function insertAdditional(name, additional) {
+				var results = document.getElementById("currentIPresults");
+				var row = results.querySelector(`[data-provider="${name}"] .row`);
+				updateElement(row, "asn", "AS" + additional.asn);
+
+				if (!isMobile()) {
+					var rowWidth = 0;
+					row.querySelectorAll(".cell").forEach((el) => {
+						rowWidth += el.offsetWidth + 10;
+					});
+					row.parentElement.style.width = rowWidth + "px";
+				}
+				setTimeout(() => {
+					// 一些动画效果
+					updateElement(row, "location", additional.position);
+					if (!isMobile()) {
+						var rowWidth = 0;
+						row.querySelectorAll(".cell").forEach((el) => {
+							rowWidth += el.offsetWidth + 10;
+						});
+						row.parentElement.style.width = rowWidth + "px";
+					}
+				}, 700);
+			}
+			function updateElement(row, col, text) {
+				var el = row.querySelector(`.cell.${col}`);
+				if (el) {
+					el.innerHTML = `<span>${text}</span>`;
+				} else {
+					var el = document.createElement("div");
+					el.className = "cell " + col;
+					el.innerHTML = `<span>${text}</span>`;
+					row.appendChild(el);
+				}
+			}
+			function resjson(resp) {
+				return resp.json();
+			}
+
+			var cache = {};
+
+			function fireIPLookup() {
+				var ip = document.querySelector("#lookupInput").value;
+				if (!ValidIPv4v6(ip)) {
+					// add shakeHead animation to input box
+					document.querySelector(".ipInputBox").style.animation = "shakeHead 0.5s";
+					setTimeout(() => {
+						document.querySelector(".ipInputBox").style.animation = "";
+					}, 500);
+					return;
+				}
+				fireIPLookupAnimation();
+				document.getElementById("ipLookupResult").innerHTML = "";
+				const ipdb = [
+					["qqwry", "纯真"],
+					["qqzeng", "qqzeng"],
+					["ipip", "IPIP"],
+					["awdb", "IP问问"],
+					["baidu", "百度"],
+					["bce", "埃文"],
+					["ipinsight", "IPinsight"],
+					//['ipinfo', 'ipinfo'],
+					["toutiao", "头条"],
+					["wuzhui", "360"],
+				];
+				// use fetchLocFromAtto(ip,db) with each ipdb to get ip location
+				ipdb.forEach((db) => {
+					fetchLocFromAtto(ip, db[0]).then((json) => {
+						insertIPLookupResult(db[1], json);
+					});
+				});
+			}
+			function insertIPLookupResult(name, data) {
+				if (data.position.trim() == "") return;
+				var results = document.getElementById("ipLookupResult");
+				console.log(name, data);
+				var row = document.createElement("div");
+				row.className = "row-wrapper";
+				row.dataset.provider = name;
+				row.innerHTML = `<div class="row"><div class="cell provider"><span>${name}</span></div><div class="cell location"><span>${data.position}</span></div></div>`;
+
+				// delay random time to insert result
+				setTimeout(() => {
+					// if right panel is not active, do not insert result
+					if (!document.querySelector(".container").classList.contains("right-active")) return;
+					results.appendChild(row);
+					if (isMobile()) {
+						// 移动版动画，只有一栏
+						var totalRows = 9;
+						var rowCount = results.querySelectorAll(".row-wrapper").length;
+						results.style.gridTemplateRows = "1fr ".repeat(rowCount) + (totalRows > rowCount ? "0fr ".repeat(totalRows - rowCount) : "");
+					} else {
+						// pc版动画，双栏 9个数据源/2四舍五入是5个
+						var totalRows = 5;
+						var rowCount = results.querySelectorAll(".row-wrapper").length;
+						// round the row count to upper
+						var rowCountRounded = Math.ceil(rowCount / 2);
+						// set the results' grid-template-rows with manually repeat
+						results.style.gridTemplateRows = "1fr ".repeat(rowCountRounded) + ((totalRows > rowCountRounded) ? "0fr ".repeat(totalRows - rowCountRounded) : "");
+					}
+				}, Math.random() * 1000);
+			}
+
+			function fetchLocFromAtto(ip, db = "qqzeng") {
+				return fetch("https://ipapi.atto.town/iphtml/" + db + "/" + ip)
+					.then(resjson)
+					.catch(function (err) {
+						console.error("Unable to get ip data from atto town: ", err);
+						random = ["中国 北京市 海淀区", "中国 广州市", "中国 内蒙古自治区 呼伦贝尔 中国电信/CN2网络"];
+						return {
+							asn: 0,
+							position: location.origin.indexOf("http://127.0.0.1") != -1 ? random[Math.floor(Math.random() * random.length)] : "未知",
+							asOrg: "",
+							fallback: "",
+						};
+					});
+			}
+			function fetchLocFromIpsb(ip) {
+				return fetch("https://api.ip.sb/geoip/" + ip)
+					.then(resjson)
+					.then(function (json) {
+						return {
+							position: json.country + " " + json.organization,
+							asn: json.asn,
+						};
+					});
+			}
+			function maskIp(ip) {
+				if (!ip) return ip;
+				if (ip.match(/(\d+\.){3}\d+/)) {
+					// ipv4
+					var maskPrefix = 27; // should > 24
+					var parts = ip.split(".");
+					var lastPart = parseInt(parts[3]);
+					var lastPartMasked = lastPart & (255 - Math.pow(2, 32 - maskPrefix) + 1);
+					parts[3] = lastPartMasked;
+					return parts.join(".");
+				} else if (ip.indexOf(":") >= 0 && ip.indexOf(".") < 0) {
+					// ipv6
+					var maskPrefix = 55;
+					var parts = ip.split(":");
+					if (parts.length < 8) {
+						var emptyPart = parts.indexOf("");
+						var emptyParts = parts.filter(function (x) {
+							return x === "";
+						}).length;
+						var paddingLength = 8 - parts.length + emptyParts;
+						var paddingArray = [emptyPart, emptyParts];
+						for (var i = 0; i < paddingLength; i++) {
+							paddingArray.push("0");
+						}
+						Array.prototype.splice.apply(parts, paddingArray);
+					}
+					var maskedParts = Math.floor(maskPrefix / 16);
+					var lastPartBits = maskPrefix % 16;
+					for (var i = parts.length - 1; i >= parts.length - maskedParts; i--) {
+						parts[i] = "0";
+					}
+					var bits = parseInt(parts[parts.length - maskedParts - 1], 16);
+					var mask = Math.pow(2, 16) - 1 - Math.pow(2, lastPartBits) + 1;
+					parts[i] = (bits & mask).toString(16);
+					var newIp = parts.join(":").replace(/(:0)*$/, "::");
+					console.log(ip, newIp);
+					return newIp;
+				}
+				return ip;
+			}
+			function ValidIPv4v6(ip) {
+				const ipv4Regex = /^(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}$/gm;
+				const ipv6Regex =
+					/^(?:(?:[a-fA-F\d]{1,4}:){7}(?:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){6}(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|:[a-fA-F\d]{1,4}|:)|(?:[a-fA-F\d]{1,4}:){5}(?::(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,2}|:)|(?:[a-fA-F\d]{1,4}:){4}(?:(?::[a-fA-F\d]{1,4}){0,1}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,3}|:)|(?:[a-fA-F\d]{1,4}:){3}(?:(?::[a-fA-F\d]{1,4}){0,2}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,4}|:)|(?:[a-fA-F\d]{1,4}:){2}(?:(?::[a-fA-F\d]{1,4}){0,3}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,5}|:)|(?:[a-fA-F\d]{1,4}:){1}(?:(?::[a-fA-F\d]{1,4}){0,4}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,6}|:)|(?::(?:(?::[a-fA-F\d]{1,4}){0,5}:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)(?:\\.(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]\d|\d)){3}|(?::[a-fA-F\d]{1,4}){1,7}|:)))(?:%[0-9a-zA-Z]{1,})?$/gm;
+				if (ipv4Regex.test(ip)) {
+					return true;
+				}
+				if (ipv6Regex.test(ip)) {
+					return true;
+				}
+				return false;
+			}
+
+			function getLoc(name, ip) {
+				ip = maskIp(ip);
+				function update(json) {
+					insertAdditional(name, json);
+				}
+				if (!cache[ip]) {
+					var attoPower = ["https://gfw.moe"].indexOf(location.origin) > -1;
+					var fetchLoc = attoPower ? fetchLocFromAtto : fetchLocFromIpsb;
+					cache[ip] = fetchLoc(ip);
+				}
+				cache[ip].then(update);
+			}
+
+			function pconline() {
+				insertResult("pconline");
+				window.IPCallBack = function (json) {
+					insertResult("pconline", json.ip);
+					delete window.IPCallBack;
+				};
+				function updateIp() {
+					var baseUrl = "https://whois.pconline.com.cn/ipJson.jsp";
+					var el = document.createElement("script");
+					el.src = baseUrl + "?_=" + Date.now();
+					document.head.appendChild(el);
+				}
+				updateIp();
+			}
+
+			function sohu() {
+				insertResult("sohu");
+				window.onmessage = function (event) {
+					if (event.data && event.data.name === "sohu") {
+						insertResult("sohu", event.data.ip);
+					}
+				};
+				var el = document.createElement("iframe");
+				el.style.display = "none";
+				el.src = "#chinaren.com";
+				document.body.appendChild(el);
+			}
+
+			function alicdn() {
+				insertResult("alicdn");
+				window.alicallback = function (data) {
+					insertResult("alicdn", data.content.localIp.split(",")[0]);
+				};
+				function updateIp() {
+					var baseUrl = "https://cdn0.dns-detect.alicdn.com/api/detect/DescribeDNSLookup?cb=alicallback";
+					var el = document.createElement("script");
+					el.src = baseUrl + "&_=" + Date.now();
+					document.head.appendChild(el);
+				}
+				updateIp();
+			}
+
+			function plainApi(name, baseUrl, callback) {
+				insertResult(name);
+				fetch(baseUrl + "?_=" + Date.now())
+					.then(function (res) {
+						return res.text();
+					})
+					.then(function (ip) {
+						if (callback) {
+							insertResult(name, callback(ip));
+						} else {
+							insertResult(name, ip);
+						}
+					});
+			}
+
+			function regexApi(name, baseUrl, regex, callback) {
+				insertResult(name);
+				fetch(baseUrl)
+					.then(function (res) {
+						return res.text();
+					})
+					.then(function (text) {
+						var matches = text.match(regex);
+						var ip = matches && matches[1];
+						if (callback) {
+							insertResult(name, callback(ip));
+						} else {
+							insertResult(name, ip);
+						}
+					});
+			}
+
+			function stunApi(name, stunServer) {
+				if ("RTCPeerConnection" in window) {
+					insertResult(name);
+					const peerConnection = new RTCPeerConnection({
+						iceServers: [
+							{
+								urls: `stun:${stunServer}`,
+							},
+						],
+					});
+					peerConnection.onicecandidate = function (e) {
+						if (e.candidate) {
+							if (e.candidate.address && e.candidate.candidate.indexOf("srflx") > -1) {
+								insertResult(name, e.candidate.address);
+							}
+						}
+					};
+					peerConnection.createDataChannel("ip");
+					peerConnection.createOffer().then(function (offer) {
+						return peerConnection.setLocalDescription(offer);
+					});
+				}
+			}
+
+			var hasMore = false;
+			function more(el) {
+				if (hasMore) return;
+				hasMore = true;
+
+				pconline();
+				sohu();
+
+				insertResult("ipsb(v4)");
+				fetch("https://api-ipv4.ip.sb/geoip")
+					.then(resjson)
+					.then(function (json) {
+						insertResult("ipsb(v4)", json.ip, json);
+					});
+
+				insertResult("ipsb(v6)");
+				fetch("https://api-ipv6.ip.sb/geoip")
+					.then(resjson)
+					.then(function (json) {
+						insertResult("ipsb(v6)", json.ip, json);
+					});
+
+				insertResult("httpbin");
+				fetch("https://httpbin.org/ip?_=" + Date.now())
+					.then(resjson)
+					.then(function (json) {
+						var o = json.origin.split(",");
+						insertResult("httpbin", o[o.length - 1]);
+					});
+
+				el.href = "https://ip.orz.tools";
+				el.textContent = "还要更多";
+				return false;
+			}
+
+			function isMobile() {
+				return window.innerWidth <= 768;
+			}
+		</script>
 	</body>
 </html>
