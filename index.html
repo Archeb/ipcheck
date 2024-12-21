@@ -192,10 +192,10 @@
 			function startIPcheck() {
 				// clear results
 				document.getElementById("currentIPresults").innerHTML = "";
-				regexApi("京东云", "https://cf-ns.com/cdn-cgi/trace", /ip=(.*)/);
+				regexApi("京东云", "https://www.cf-ns.com/cdn-cgi/trace", /ip=(.*)/);
 
 				//plainApi("net.cn", "https://ashs-qd.orztech.com/angry-internet-north-outlook-strange.php");
-				plainApi("阿里云", "https://www.xivcdn.com/_myip");
+				//plainApi("阿里云", "https://www.xivcdn.com/_myip");
 
 				insertResult("又拍云");
 				fetch("https://pubstatic.b0.upaiyun.com/?_upnode&_=" + Date.now())
